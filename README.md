@@ -16,9 +16,6 @@ This project is an AI-powered portfolio builder that allows users to quickly gen
 * **Light and Dark Theme Toggle:** A switch in the header enables users to toggle between a light and a dark theme for the application interface, enhancing usability and accessibility.
 * **Persistent State with Redux Persist:** The generated portfolio data is stored in the Redux state and persisted using `redux-persist` and `localStorage`. This ensures that the portfolio preview remains visible even after a page refresh.
 * **Attractive User Interface:** The application utilizes Material-UI components to provide a clean, modern, and responsive user interface with consistent styling and accessibility features.
-* **Informative Header and Footer:** A header with the application title and a theme toggle, along with a footer displaying copyright information and a link to the source code repository (if applicable).
-* **Engaging Introductory Text:** An introductory section with a compelling title and descriptive text encourages users to try the AI-powered portfolio builder.
-* **Visual Appeal with Icons:** Material-UI icons are used in the header and introductory sections to enhance visual appeal and provide context.
 
 ## Technologies Used
 
@@ -26,7 +23,6 @@ This project is an AI-powered portfolio builder that allows users to quickly gen
 
 * **React:** A JavaScript library for building user interfaces.
 * **Material-UI (@mui/material):** A popular React UI framework providing pre-built, customizable components that implement Google's Material Design.
-* **Material-UI Icons (@mui/icons-material):** A library of SVG icons following Material Design guidelines, used for visual elements.
 * **Redux:** A predictable state management library for JavaScript applications, used to manage the user's input data and the generated portfolio.
 * **Redux Toolkit (@reduxjs/toolkit):** A set of utilities that simplifies Redux development, including store setup, reducer creation, and asynchronous logic handling.
 * **Redux Persist (redux-persist):** A library to persist and rehydrate Redux stores, used here to save the generated portfolio in `localStorage`.
