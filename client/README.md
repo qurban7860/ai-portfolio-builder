@@ -1,4 +1,4 @@
-# AI Portfolio Builder
+# AI Portfolio Builder Client Side
 
 ## Technologies Used
 
