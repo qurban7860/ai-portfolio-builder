@@ -10,28 +10,70 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/api/generate-portfolio', async (req, res) => {
-  const { summary, skills, experience, projects } = req.body;
+  const { name, phone, email, linkedin, github, summary, skills, experience, education, awards, projects } = req.body;
   const apiKey = process.env.GEMINI_API_KEY;
 
-  const prompt = `Generate a professional HTML portfolio based on the following information:
+  const prompt = `Generate a professional HTML portfolio using the following format:
 
-  Summary: ${summary}
+  <div class="portfolio">
+    <header class="contact-info">
+      <h1>${name}</h1>
+      <p>Phone: ${phone} | Email: ${email}</p>
+      <p>LinkedIn: <a href="${linkedin}">${linkedin}</a> | GitHub: <a href="${github}">${github}</a></p>
+    </header>
 
-  Skills: ${skills}
+    <section class="summary">
+      <h2>About Me</h2>
+      <p>${summary}</p>
+    </section>
 
-  Experience:
-  ${experience
-    .split('\n')
-    .map((exp) => `- ${exp}`)
-    .join('\n')}
+    <section class="education">
+      <h2>Education</h2>
+      <ul>
+        ${education
+          .split('\n')
+          .map((edu) => `<li>${edu}</li>`)
+          .join('')}
+      </ul>
+    </section>
 
-  Projects:
-  ${projects
-    .split('\n')
-    .map((proj) => `- ${proj}`)
-    .join('\n')}
+    <section class="skills">
+      <h2>Skills</h2>
+      <p>${skills}</p>
+    </section>
 
-  Include sections for "About Me" (using the summary), "Skills," "Experience," and "Projects." Use semantic HTML5 tags and basic styling for readability. **Only output the raw HTML code.**`; // Modified prompt
+    <section class="experience">
+      <h2>Experience</h2>
+      <ul>
+        ${experience
+          .split('\n')
+          .map((exp) => `<li>${exp}</li>`)
+          .join('')}
+      </ul>
+    </section>
+
+    <section class="projects">
+      <h2>Projects</h2>
+      <ul>
+        ${projects
+          .split('\n')
+          .map((proj) => `<li>${proj}</li>`)
+          .join('')}
+      </ul>
+    </section>
+
+    <section class="awards">
+      <h2>Awards and Recognition</h2>
+      <ul>
+        ${awards
+          .split('\n')
+          .map((award) => `<li>${award}</li>`)
+          .join('')}
+      </ul>
+    </section>
+  </div>
+
+  **Only output the raw HTML code within the 'portfolio' div.**`;
 
   try {
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
@@ -56,18 +98,14 @@ app.post('/api/generate-portfolio', async (req, res) => {
     const data = await response.json();
     const generatedText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
-    if (generatedText) {
-      const htmlStartIndex = generatedText.indexOf('<');
-      const htmlEndIndex = generatedText.lastIndexOf('>');
-
-      let extractedHTML = generatedText;
-      if (htmlStartIndex !== -1 && htmlEndIndex > htmlStartIndex) {
-        extractedHTML = generatedText.substring(htmlStartIndex, htmlEndIndex + 1);
-      } else {
-        console.warn("Could not reliably extract HTML. Sending the full response.");
-      }
-
+    if (generatedText && generatedText.includes('<div class="portfolio">') && generatedText.includes('</div>')) {
+      const startIndex = generatedText.indexOf('<div class="portfolio">');
+      const endIndex = generatedText.lastIndexOf('</div>') + '</div>'.length;
+      const extractedHTML = generatedText.substring(startIndex, endIndex);
       res.json({ portfolio: extractedHTML });
+    } else if (generatedText) {
+      console.warn("Could not reliably extract the main portfolio div. Sending the full response.");
+      res.json({ portfolio: generatedText });
     } else {
       console.error("Generated text is undefined in Gemini API response.");
       res.status(500).json({ error: 'Failed to extract portfolio content from Gemini API response.' });
