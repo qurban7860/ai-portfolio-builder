@@ -4,7 +4,6 @@ const initialState = {
   name: '',
   phone: '', 
   email: '',
-  linkedin: '',
   github: '',
   summary: '',
   education: '', 

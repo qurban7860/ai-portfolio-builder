@@ -10,17 +10,36 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/api/generate-portfolio', async (req, res) => {
-  const { name, phone, email, linkedin, github, summary, skills, experience, education, awards, projects } = req.body;
+  const { name, phone, email, github, summary, skills, experience, education, awards, projects } = req.body;
   const apiKey = process.env.GEMINI_API_KEY;
+
+  const formatEntry = (entry) => {
+    const parts = entry.split('\n').filter(part => part.trim() !== '');
+    if (parts.length >= 2) {
+      return `<li><strong>${parts[0].trim()}</strong><br/>${parts.slice(1).join('<br/>').trim()}</li>`;
+    } else if (parts.length === 1) {
+      return `<li><strong>${parts[0].trim()}</strong></li>`;
+    }
+    return '';
+  };
 
   const prompt = `Generate a professional HTML portfolio using the following format:
 
   <div class="portfolio">
-    <header class="contact-info">
-      <h1>${name}</h1>
-      <p>Phone: ${phone} | Email: ${email}</p>
-      <p>LinkedIn: <a href="${linkedin}">${linkedin}</a> | GitHub: <a href="${github}">${github}</a></p>
-    </header>
+    <header class="contact-info" style="text-align: center; margin-bottom: 2rem;">
+  <h1 class="name" style="font-size: 2rem; margin-bottom: 1rem;">${name}</h1>
+  <div class="contact-bar" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; font-size: 1rem;">
+    <span style="display: flex; align-items: center; gap: 0.4rem;">
+      <strong>Phone:</strong> <a href="tel:${phone}" style="text-decoration: none; color: #0073b1;">${phone}</a>
+    </span>
+    <span style="display: flex; align-items: center; gap: 0.4rem;">
+      <strong>Email:</strong> <a href="mailto:${email}" style="text-decoration: none; color: #0073b1;">${email}</a>
+    </span>
+    <span style="display: flex; align-items: center; gap: 0.4rem;">
+      <strong>GitHub:</strong> <a href="${github}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: #0073b1;">${github}</a>
+    </span>
+  </div>
+</header>
 
     <section class="summary">
       <h2>About Me</h2>
@@ -31,8 +50,8 @@ app.post('/api/generate-portfolio', async (req, res) => {
       <h2>Education</h2>
       <ul>
         ${education
-          .split('\n')
-          .map((edu) => `<li>${edu}</li>`)
+          .split('\n\n') 
+          .map(formatEntry)
           .join('')}
       </ul>
     </section>
@@ -46,8 +65,8 @@ app.post('/api/generate-portfolio', async (req, res) => {
       <h2>Experience</h2>
       <ul>
         ${experience
-          .split('\n')
-          .map((exp) => `<li>${exp}</li>`)
+          .split('\n\n') 
+          .map(formatEntry)
           .join('')}
       </ul>
     </section>
@@ -56,8 +75,8 @@ app.post('/api/generate-portfolio', async (req, res) => {
       <h2>Projects</h2>
       <ul>
         ${projects
-          .split('\n')
-          .map((proj) => `<li>${proj}</li>`)
+          .split('\n\n') 
+          .map(formatEntry)
           .join('')}
       </ul>
     </section>
@@ -66,14 +85,16 @@ app.post('/api/generate-portfolio', async (req, res) => {
       <h2>Awards and Recognition</h2>
       <ul>
         ${awards
-          .split('\n')
-          .map((award) => `<li>${award}</li>`)
+          .split('\n\n') 
+          .map(formatEntry)
           .join('')}
       </ul>
     </section>
   </div>
 
-  **Only output the raw HTML code within the 'portfolio' div.**`;
+  **Only output the raw HTML code within the 'portfolio' div.**
+
+  **Important:** For the Education, Experience, Projects, and Awards sections, please format each entry with the title on the first line (make it bold using <strong> tags) and the description (if any) on subsequent lines, separated by <br/> tags. Separate each entry with a blank line in the input.`;
 
   try {
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {

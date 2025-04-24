@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateFormData, generatePortfolioStart, generatePortfolioSuccess } from '../userSlice'; 
+import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
 import { useNavigate } from 'react-router-dom'; 
 import {
   TextField, Button, Typography, Box, Paper, Stack, Divider, Container
@@ -40,20 +41,21 @@ const PortfolioForm = () => {
         Portfolio Form
       </Typography>
     <Paper elevation={4} sx={{ p: 4, borderRadius: 4, mt: 4 }}>
-      <Typography variant="h4" gutterBottom align="center" color="primary">
-        ✨ Create Your AI-Generated Portfolio
-      </Typography>
+    <Typography variant="h4" gutterBottom align="center" color="primary" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+     <Button variant="contained" color="primary" startIcon={<PsychologyAltIcon />}>
+       Create Your AI-Generated Portfolio
+     </Button>
+    </Typography>
       <Divider sx={{ mb: 3 }} />
       <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off">
         <Stack spacing={3}>
-          <Box display="grid" gap={2} gridTemplateColumns={{ xs: '1fr', sm: 'repeat(3, 1fr)' }}>
+          <Box display="grid" gap={2} gridTemplateColumns={{ xs: '1fr', sm: 'repeat(2, 1fr)' }}>
             <TextField label="Name" name="name" value={formData.name} onChange={handleChange} fullWidth />
             <TextField label="Phone Number" name="phone" value={formData.phone} onChange={handleChange} fullWidth />
-            <TextField label="Email" name="email" value={formData.email} onChange={handleChange} fullWidth />
           </Box>
 
           <Box display="grid" gap={2} gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr' }}>
-            <TextField label="LinkedIn Profile" name="linkedin" value={formData.linkedin} onChange={handleChange} fullWidth />
+            <TextField label="Email" name="email" value={formData.email} onChange={handleChange} fullWidth />
             <TextField label="GitHub Profile" name="github" value={formData.github} onChange={handleChange} fullWidth />
           </Box>
 
