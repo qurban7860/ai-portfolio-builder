@@ -6,14 +6,18 @@ import { store, persistor } from './store';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme } from './theme'; 
 import { PersistGate } from 'redux-persist/integration/react';
+import { AuthProvider } from './context/AuthContext'; 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider theme={lightTheme}> 
-          <App />
+        <ThemeProvider theme={lightTheme}>
+          <AuthProvider> 
+            <App />
+          </AuthProvider>
         </ThemeProvider>
       </PersistGate>
     </Provider>

@@ -4,14 +4,17 @@ import PortfolioForm from './components/PortfolioForm';
 import PortfolioPreview from './components/PortFolioPreview';
 import {
   Container, CssBaseline, Box, Typography, AppBar,
-  Toolbar, IconButton, Tooltip
+  Toolbar, IconButton, Tooltip, Button, Avatar
 } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import CodeIcon from '@mui/icons-material/Code';
-import BuildIcon from '@mui/icons-material/Build';
+import { useAuth } from './context/AuthContext';
+import Login from './Login';      
+import Signup from './Signup';     
+import { useNavigate } from 'react-router-dom';
 
 function App() {
   const [mode, setMode] = useState('light');
@@ -20,53 +23,75 @@ function App() {
     mode === 'light' ? lightTheme : darkTheme
   ), [mode]);
 
+  return (
+    <Router>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AppContent mode={mode} setMode={setMode} />
+      </ThemeProvider>
+    </Router>
+  );
+}
+
+function AppContent({ mode, setMode }) {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
   const handleThemeToggle = () => {
     setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
   };
 
+  const handleLogin = () => navigate('/login');
+  const handleSignup = () => navigate('/signup');
+  const handleLogout = async () => {
+    await logout();
+  };
+
   return (
-    <Router>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AppBar position="static" color="primary" elevation={3}>
+    <>
+      <AppBar position="fixed" color="primary" elevation={3}>
         <Toolbar>
           <CodeIcon sx={{ mr: 2 }} />
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             AI Portfolio Builder
           </Typography>
           <Tooltip title="Toggle Theme">
-            <IconButton onClick={handleThemeToggle} color="inherit">
+            <IconButton onClick={handleThemeToggle} color="inherit" sx={{ mr: 2 }}>
               {mode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
             </IconButton>
           </Tooltip>
+          {user ? (
+            <>
+              <Avatar alt={user.email} src={user.photoURL} sx={{ mr: 2 }} />
+              <Typography variant="body1" sx={{ mr: 2 }}>
+                {user.email}
+              </Typography>
+              <Button color="inherit" onClick={handleLogout}>Logout</Button>
+            </>
+          ) : (
+            <>
+              <Button color="inherit" onClick={handleLogin}>Login</Button>
+              <Button color="inherit" onClick={handleSignup}>Sign Up</Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
 
       <Container maxWidth="lg" sx={{ mt: 5, pt: 4 }}>
-            <Routes>
-              <Route path="/" element={
-                <Box textAlign="center">
-                  {/* <BuildIcon sx={{ fontSize: 64, color: theme.palette.primary.main }} />
-                  <Typography variant="h4" sx={{ mt: 2 }} color="text.primary">
-                    Build Your Portfolio in Seconds
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto', mt: 1 }}>
-                    Provide your professional details and let AI create a polished portfolio for you – smart, fast, and effective.
-                  </Typography> */}
-                  <PortfolioForm />
-                </Box>
-              } />
-              <Route path="/preview" element={<PortfolioPreview />} />
-            </Routes>
+        <Routes>
+          <Route path="/" element={<PortfolioForm />} />
+          <Route path="/preview" element={<PortfolioPreview />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
       </Container>
 
       <Box sx={{ py: 4, mt: 4, textAlign: 'center' }}>
         <Typography variant="body2" color="text.secondary">
-          &copy; {new Date().getFullYear()} AI Portfolio Builder 
+          &copy; {new Date().getFullYear()} AI Portfolio Builder
         </Typography>
       </Box>
-    </ThemeProvider>
-    </Router>
+    </>
   );
 }
 
