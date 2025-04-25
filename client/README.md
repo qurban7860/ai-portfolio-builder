@@ -16,6 +16,7 @@
 * **React Hooks (useState, useMemo):** Used for managing component state and optimizing performance.
 * **React Router (potentially):** While not explicitly mentioned in the initial setup, it could be used for more complex navigation in future enhancements.
 * **Error Handling (enqueueSnackbar):** enqueueSnackbar integrated to show a success or error message when the user signup, login (email/password or Google).
+* * **dotenv:** A package to load environment variables from a `.env` file, used to securely store the Firebase authentication keys.
 
 ## Setup Instructions
 
