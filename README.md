@@ -20,7 +20,7 @@ This project is an AI-powered portfolio builder that allows users to quickly gen
 ### Client-Side (React)
 
 * **React:** A JavaScript library for building user interfaces.
-* * **Firebase Authentication (@firebase/auth):** Used to handle user authentication (sign up, log in, sign out).
+* **Firebase Authentication (@firebase/auth):** Used to handle user authentication (sign up, log in, sign out).
 * **Material-UI (@mui/material):** A popular React UI framework providing pre-built, customizable components that implement Google's Material Design.
 * **Redux:** A predictable state management library for JavaScript applications, used to manage the user's input data and the generated portfolio.
 * **Redux Toolkit (@reduxjs/toolkit):** A set of utilities that simplifies Redux development, including store setup, reducer creation, and asynchronous logic handling.
@@ -29,6 +29,7 @@ This project is an AI-powered portfolio builder that allows users to quickly gen
 * **React Hooks (useState, useMemo):** Used for managing component state and optimizing performance.
 * **React Router (react-router-dom):** Used for navigation within the application.
 * **Error Handling (enqueueSnackbar):** enqueueSnackbar integrated to show a success or error message when the user signup, login (email/password or Google).
+* * **dotenv:** A package to load environment variables from a `.env` file, used to securely store the Firebase authentication key.
 
 ### Server-Side (Node/Express)
 
