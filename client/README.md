@@ -4,10 +4,10 @@
 
 ### Client-Side (React)
 
-* * **Firebase Authentication (@firebase/auth):** Used to handle user authentication (sign up, log in, sign out).
+* **Firebase Authentication (@firebase/auth):** Used to handle user authentication (sign up, log in, sign out).
 * **React:** A JavaScript library for building user interfaces.
 * **Material-UI (@mui/material):** A popular React UI framework providing pre-built, customizable components that implement Google's Material Design.
-* * **User Authentication:** Users can create an account and log in to access the portfolio generation features.  This uses Firebase Authentication.
+* **User Authentication:** Users can create an account and log in to access the portfolio generation features.  This uses Firebase Authentication.
 * **Export to PDF:** Logged-in users can export their generated portfolio as a PDF document.  Users who are not logged in are prompted to sign up or log in.
 * **Redux:** A predictable state management library for JavaScript applications, used to manage the user's input data and the generated portfolio.
 * **Redux Toolkit (@reduxjs/toolkit):** A set of utilities that simplifies Redux development, including store setup, reducer creation, and asynchronous logic handling.
