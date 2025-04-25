@@ -63,7 +63,7 @@ This project is an AI-powered portfolio builder that allows users to quickly gen
 
 1.  Navigate to the client directory: cd client
 2.  Install dependencies: npm install
-3.  Start the development server: npm start (usually runs on http://localhost:3000)
+3.  Start the development server: npm start 
 
 ### Server-Side
 
