@@ -1,5 +1,14 @@
 # AI Portfolio Builder
 
+## 🔗 Live Links
+
+- **Client:** [https://ai-portfolio-builder-ivory.vercel.app/](https://ai-portfolio-builder-ivory.vercel.app/)
+- **Backend API:** [https://ai-portfolio-builder-server.vercel.app/](https://ai-portfolio-builder-server.vercel.app/)
+
+> ✅ The backend server is fully connected with the client. The client app sends portfolio data to the backend API to generate the portfolio using the Gemini AI model.
+
+---
+
 ## Technologies Used
 
 ### Server-Side (Node/Express)
@@ -17,5 +26,3 @@
 3.  Create a `.env` file and add your Gemini API key:
     ```
     GEMINI_API_KEY=YOUR_ACTUAL_GEMINI_API_KEY
-    ```
-4.  Start the server: `node server.js` (usually runs on `http://localhost:5000`)

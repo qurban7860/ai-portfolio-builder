@@ -1,5 +1,14 @@
 # AI Portfolio Builder
 
+## 🔗 Live Links
+
+- **Client:** [https://ai-portfolio-builder-ivory.vercel.app/](https://ai-portfolio-builder-ivory.vercel.app/)
+- **Backend API:** [https://ai-portfolio-builder-server.vercel.app/](https://ai-portfolio-builder-server.vercel.app/)
+
+> ✅ The backend server is fully connected with the client. The client app sends portfolio data to the backend API to generate the portfolio using the Gemini AI model.
+
+---
+
 ## Overview
 
 This project is an AI-powered portfolio builder that allows users to quickly generate a personal portfolio by providing basic information. Built with a modern web stack, it offers a user-friendly interface and a seamless experience from input to preview.
@@ -7,9 +16,9 @@ This project is an AI-powered portfolio builder that allows users to quickly gen
 ## Features Implemented
 
 * **Interactive Form for User Input:** A clear and user-friendly form allows users to input their key professional information.
-* **AI-Powered Portfolio Generation:** Upon submitting the form, the user's data is sent to a backend server, which uses the Gemini AI model to generate a basic HTML portfolio structure.  The `gemini-1.5-flash` model is used for content generation.
-* **User Authentication:** Users can create an account and log in to access the portfolio download features.  This uses Firebase Authentication.
-* **Export to PDF:** Logged-in users can export their generated portfolio as a PDF document.  Users who are not logged in are prompted to sign up or log in.
+* **AI-Powered Portfolio Generation:** Upon submitting the form, the user's data is sent to a backend server, which uses the Gemini AI model to generate a basic HTML portfolio structure. The `gemini-1.5-flash` model is used for content generation.
+* **User Authentication:** Users can create an account and log in to access the portfolio download features. This uses Firebase Authentication.
+* **Export to PDF:** Logged-in users can export their generated portfolio as a PDF document. Users who are not logged in are prompted to sign up or log in.
 * **Real-time Portfolio Preview:** The generated HTML is sent back to the client and displayed in a preview section, allowing users to see the initial output of their portfolio.
 * **Light and Dark Theme Toggle:** A switch in the header enables users to toggle between a light and a dark theme for the application interface, enhancing usability and accessibility.
 * **Persistent State with Redux Persist:** The generated portfolio data is stored in the Redux state and persisted using `redux-persist` and `localStorage`. This ensures that the portfolio preview remains visible even after a page refresh.
@@ -52,17 +61,12 @@ This project is an AI-powered portfolio builder that allows users to quickly gen
 
 ### Client-Side
 
-1.  Navigate to the `client` directory: `cd client`
-2.  Install dependencies: `npm install`
-3.  Start the development server: `npm start` (usually runs on `http://localhost:3000`)
+1.  Navigate to the client directory: cd client
+2.  Install dependencies: npm install
+3.  Start the development server: npm start 
 
 ### Server-Side
 
-1.  Navigate to the `server` directory: `cd server`
-2.  Install dependencies: `npm install`
-3.  Create a `.env` file in the `server` directory and add your Gemini API key:
-
-    ```
-    GEMINI_API_KEY=YOUR_ACTUAL_GEMINI_API_KEY
-    ```
-4.  Start the server: `node server.js` (usually runs on `http://localhost:5000`)
+1.  Navigate to the server directory: cd server
+2.  Install dependencies: npm install
+3.  Create a .env file in the server directory and add your Gemini API key.
