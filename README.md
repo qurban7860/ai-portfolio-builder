@@ -61,6 +61,14 @@ This project is an AI-powered portfolio builder that allows users to quickly gen
 
 ### Client-Side
 
-1. Navigate to the `client` directory:  
-   ```bash
-   cd client
+1.  Navigate to the client directory: cd client
+2.  Install dependencies: npm install
+3.  Start the development server: npm start (usually runs on http://localhost:3000)
+
+### Server-Side
+
+1.  Navigate to the server directory: cd server
+2.  Install dependencies: npm install
+3.  Create a .env file in the server directory and add your Gemini API key:
+
+GEMINI_API_KEY=YOUR_ACTUAL_GEMINI_API_KEY 
