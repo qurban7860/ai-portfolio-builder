@@ -1,11 +1,13 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { useSnackbar } from 'notistack'; 
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (currentUser) => {
@@ -17,8 +19,9 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await signOut(auth);
-      console.log("User signed out successfully");
+      enqueueSnackbar("User signed out successfully", { variant: "success" }); 
     } catch (error) {
+      enqueueSnackbar("Logout failed", { variant: "error" }); 
       console.error("Logout error:", error);
     }
   };

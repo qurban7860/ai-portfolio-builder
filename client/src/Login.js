@@ -4,6 +4,7 @@ import { Button, TextField, Typography, Box, Paper } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from './firebase'; 
+import { useSnackbar } from 'notistack';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
     const theme = useTheme();
 
     const handleSignIn = async (e) => {
@@ -18,9 +20,9 @@ const Login = () => {
         setError('');
         setLoading(true);
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            console.log("User signed in:", userCredential.user);
-            navigate('/'); 
+            await signInWithEmailAndPassword(auth, email, password);
+            enqueueSnackbar('Signed in successfully!', { variant: 'success' }); 
+            navigate('/');
         } catch (err) {
             setError(err.message);
             console.error("Error signing in:", err);
@@ -28,13 +30,13 @@ const Login = () => {
             setLoading(false);
         }
     };
-
+    
     const handleGoogleSignIn = async () => {
         const provider = new GoogleAuthProvider();
         try {
-            const userCredential = await signInWithPopup(auth, provider);
-            console.log("User signed in with Google:", userCredential.user);
-            navigate('/'); 
+            await signInWithPopup(auth, provider);
+            enqueueSnackbar('Signed in with Google successfully!', { variant: 'success' }); 
+            navigate('/');
         } catch (err) {
             setError(err.message);
             console.error("Error signing in with Google:", err);

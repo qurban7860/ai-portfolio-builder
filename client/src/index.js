@@ -7,6 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme } from './theme'; 
 import { PersistGate } from 'redux-persist/integration/react';
 import { AuthProvider } from './context/AuthContext'; 
+import { SnackbarProvider } from 'notistack'; 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -15,9 +16,14 @@ root.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider theme={lightTheme}>
-          <AuthProvider> 
-            <App />
-          </AuthProvider>
+          <SnackbarProvider 
+            maxSnack={3} 
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }} 
+          >
+            <AuthProvider> 
+              <App />
+            </AuthProvider>
+          </SnackbarProvider>
         </ThemeProvider>
       </PersistGate>
     </Provider>

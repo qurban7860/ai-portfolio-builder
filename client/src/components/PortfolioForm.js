@@ -3,15 +3,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateFormData, generatePortfolioStart, generatePortfolioSuccess } from '../userSlice'; 
 import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
 import { useNavigate } from 'react-router-dom'; 
-import {
-  TextField, Button, Typography, Box, Paper, Stack, Divider, Container
-} from '@mui/material';
+import { TextField, Button, Typography, Box, Paper, Stack, Divider, Container } from '@mui/material';
 import axios from 'axios';
+import { useSnackbar } from 'notistack'; 
+
 
 const PortfolioForm = () => {
   const formData = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
+  const { enqueueSnackbar } = useSnackbar(); 
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -21,10 +22,11 @@ const PortfolioForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     dispatch(generatePortfolioStart());
-
+  
     try {
       const response = await axios.post('http://localhost:5000/api/generate-portfolio', formData);
       dispatch(generatePortfolioSuccess(response.data.portfolio)); 
+      enqueueSnackbar('Portfolio generated successfully!', { variant: 'success' }); 
       navigate('/preview'); 
     } catch (error) {
       console.error('Error generating portfolio:', error);
@@ -32,9 +34,10 @@ const PortfolioForm = () => {
         type: 'user/generatePortfolioFailure',
         payload: error.response?.data?.error || 'Failed to generate portfolio.',
       });
+      enqueueSnackbar(error.response?.data?.error || 'Failed to generate portfolio.', { variant: 'error' }); 
     }
   };
-
+  
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
      <Typography variant="h4" gutterBottom align="center" sx={{ fontWeight: 600 }}>
