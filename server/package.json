@@ -1,6 +1,7 @@
 {
-  "name": "my-project",
+  "name": "ai-portfolio-builder",
   "version": "1.0.0",
+  "type": "module", 
   "main": "api/server.js",
   "scripts": {
     "dev": "vercel dev",

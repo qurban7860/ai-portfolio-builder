@@ -1,11 +1,12 @@
-import 'dotenv/config';  
+
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import fetch from 'node-fetch';
+import fetch from 'node-fetch';  
 import helmet from 'helmet'; 
 
 const app = express();
-const port = process.env.PORT || 5000;  // Use dynamic port for deployment, fallback to 5000 for local
+const port = process.env.PORT || 5000;  
 
 app.use(helmet());  
 app.use(cors());
@@ -97,6 +98,7 @@ app.post('/api/generate-portfolio', async (req, res) => {
   **Only output the raw HTML code within the 'portfolio' div.**`;
 
   try {
+    // Make the API call
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: {
