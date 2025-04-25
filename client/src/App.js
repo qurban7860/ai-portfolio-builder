@@ -2,18 +2,16 @@ import React, { useState, useMemo } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PortfolioForm from './components/PortfolioForm';
 import PortfolioPreview from './components/PortFolioPreview';
-import {
-  Container, CssBaseline, Box, Typography, AppBar,
-  Toolbar, IconButton, Tooltip, Button, Avatar
-} from '@mui/material';
+import { Container, CssBaseline, Box, Typography, AppBar, Toolbar, IconButton, Tooltip, Button, Avatar, Menu, MenuItem } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import CodeIcon from '@mui/icons-material/Code';
+import MenuIcon from '@mui/icons-material/Menu'; 
 import { useAuth } from './context/AuthContext';
-import Login from './Login';      
-import Signup from './Signup';     
+import Login from './Login';
+import Signup from './Signup';
 import { useNavigate } from 'react-router-dom';
 
 function App() {
@@ -36,6 +34,7 @@ function App() {
 function AppContent({ mode, setMode }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null); 
 
   const handleThemeToggle = () => {
     setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
@@ -45,6 +44,14 @@ function AppContent({ mode, setMode }) {
   const handleSignup = () => navigate('/signup');
   const handleLogout = async () => {
     await logout();
+  };
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -62,16 +69,66 @@ function AppContent({ mode, setMode }) {
           </Tooltip>
           {user ? (
             <>
-              <Avatar alt={user.email} src={user.photoURL} sx={{ mr: 2 }} />
-              <Typography variant="body1" sx={{ mr: 2 }}>
-                {user.email}
+              <Avatar alt={user.displayName} src={user.photoURL} sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }} />
+              <Typography variant="body1" sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
+                {user.displayName || user.email}
               </Typography>
-              <Button color="inherit" onClick={handleLogout}>Logout</Button>
+              <Button color="inherit" onClick={handleLogout} sx={{ display: { xs: 'none', md: 'flex' } }}>Logout</Button>
+              {/* Mobile Menu Button */}
+              <IconButton
+                color="inherit"
+                onClick={handleMenuOpen}
+                sx={{ display: { xs: 'flex', md: 'none' } }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+              >
+                <MenuItem onClick={handleMenuClose}>
+                  <Typography variant="body1">{user.displayName || user.email}</Typography>
+                </MenuItem>
+                <MenuItem onClick={() => { handleLogout(); handleMenuClose(); }}>Logout</MenuItem>
+              </Menu>
             </>
           ) : (
             <>
-              <Button color="inherit" onClick={handleLogin}>Login</Button>
-              <Button color="inherit" onClick={handleSignup}>Sign Up</Button>
+              <Button color="inherit" onClick={handleLogin} sx={{ display: { xs: 'none', md: 'flex' } }}>Login</Button>
+              <Button color="inherit" onClick={handleSignup} sx={{ display: { xs: 'none', md: 'flex' } }}>Sign Up</Button>
+              {/* Mobile Menu Button */}
+              <IconButton
+                color="inherit"
+                onClick={handleMenuOpen}
+                sx={{ display: { xs: 'flex', md: 'none' } }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+              >
+                <MenuItem onClick={() => { handleLogin(); handleMenuClose(); }}>Login</MenuItem>
+                <MenuItem onClick={() => { handleSignup(); handleMenuClose(); }}>Sign Up</MenuItem>
+              </Menu>
             </>
           )}
         </Toolbar>
