@@ -24,7 +24,7 @@ const PortfolioForm = () => {
     dispatch(generatePortfolioStart());
   
     try {
-      const response = await axios.post('http://localhost:5000/api/generate-portfolio', formData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/generate-portfolio`, formData);
       dispatch(generatePortfolioSuccess(response.data.portfolio)); 
       enqueueSnackbar('Portfolio generated successfully!', { variant: 'success' }); 
       navigate('/preview'); 
