@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {
-  Container, Typography, Paper, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Tooltip, IconButton } from "@mui/material";
+import { Container, Typography, Paper, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Tooltip } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { jsPDF } from "jspdf";
@@ -50,26 +49,26 @@ const PortfolioPreview = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 3 }}>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 3, flexWrap: "wrap", rowGap: 2, columnGap: 2, position: "relative" }}>
+ 
+      <Box sx={{ display: "flex", alignItems: "center", flex: '1 1 auto' }}>
         <Tooltip title="Go Back" arrow>
-          <IconButton onClick={handleGoBack} color="primary" variant="outlined">
+          <Button onClick={handleGoBack} color="primary" variant="contained">
             <ArrowBackIcon />
-          </IconButton>
+          </Button>
         </Tooltip>
-        </Box>
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: 600, position: "absolute", left: "50%", transform: "translateX(-50%)" }}>
-          Portfolio Preview
-        </Typography>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleExportPdf}
-          startIcon={<FileDownloadIcon />}
-        >
+      </Box>
+
+      <Typography variant="h4" sx={{ fontWeight: 700, flex: '2 1 100%', textAlign: 'center', color: 'text.primary' }}>
+        Portfolio Preview
+      </Typography>
+
+      <Box sx={{ flex: '1 1 auto', display: 'flex', justifyContent: 'flex-end' }}>
+        <Button variant="contained" color="secondary" onClick={handleExportPdf} startIcon={<FileDownloadIcon />} sx={{ ml: 'auto' }}>
           Export to PDF
         </Button>
       </Box>
+     </Box>
 
       <Paper elevation={4} sx={{ p: 4, borderRadius: 3 }}>
         <Box
