@@ -1,4 +1,10 @@
 {
-    "runtime": "nodejs18.x",
-    "handler": "server.js"
+    "handler": "server.js",
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/server.js"
+      }
+    ]
   }
+  
