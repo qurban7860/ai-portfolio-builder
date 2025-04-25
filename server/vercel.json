@@ -1,16 +1,4 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "server/index.js",
-        "use": "@vercel/node"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/api/(.*)",
-        "dest": "/server/index.js"
-      }
-    ]
+    "runtime": "nodejs18.x",
+    "handler": "server.js"
   }
-  
