@@ -1,16 +1,19 @@
-
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import fetch from 'node-fetch';  
-import helmet from 'helmet'; 
+import fetch from 'node-fetch';
+import helmet from 'helmet';
 
 const app = express();
-const port = process.env.PORT || 5000;  
+const port = process.env.PORT || 5000;
 
-app.use(helmet());  
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.send('AI Portfolio Builder Server is running.');
+});
 
 app.post('/api/generate-portfolio', async (req, res) => {
   const { name, phone, email, github, summary, skills, experience, education, awards, projects } = req.body;
@@ -52,10 +55,7 @@ app.post('/api/generate-portfolio', async (req, res) => {
     <section class="education">
       <h2>Education</h2>
       <ul>
-        ${education
-          .split('\n\n') 
-          .map(formatEntry)
-          .join('')}
+        ${education.split('\n\n').map(formatEntry).join('')}
       </ul>
     </section>
 
@@ -67,30 +67,21 @@ app.post('/api/generate-portfolio', async (req, res) => {
     <section class="experience">
       <h2>Experience</h2>
       <ul>
-        ${experience
-          .split('\n\n') 
-          .map(formatEntry)
-          .join('')}
+        ${experience.split('\n\n').map(formatEntry).join('')}
       </ul>
     </section>
 
     <section class="projects">
       <h2>Projects</h2>
       <ul>
-        ${projects
-          .split('\n\n') 
-          .map(formatEntry)
-          .join('')}
+        ${projects.split('\n\n').map(formatEntry).join('')}
       </ul>
     </section>
 
     <section class="awards">
       <h2>Awards and Recognition</h2>
       <ul>
-        ${awards
-          .split('\n\n') 
-          .map(formatEntry)
-          .join('')}
+        ${awards.split('\n\n').map(formatEntry).join('')}
       </ul>
     </section>
   </div>
@@ -98,7 +89,6 @@ app.post('/api/generate-portfolio', async (req, res) => {
   **Only output the raw HTML code within the 'portfolio' div.**`;
 
   try {
-    // Make the API call
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: {
