@@ -77,7 +77,7 @@ function AppContent({ mode, setMode }) {
         </Toolbar>
       </AppBar>
 
-      <Container maxWidth="lg" sx={{ mt: 5, pt: 4 }}>
+      <Container maxWidth="lg" sx={{ mt: 6, pt: 4 }}>
         <Routes>
           <Route path="/" element={<PortfolioForm />} />
           <Route path="/preview" element={<PortfolioPreview />} />
