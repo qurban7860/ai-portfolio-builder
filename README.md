@@ -20,9 +20,8 @@ This project is an AI-powered portfolio builder that allows users to quickly gen
 * **User Authentication:** Users can create an account and log in to access the portfolio download features. This uses Firebase Authentication.
 * **Export to PDF:** Logged-in users can export their generated portfolio as a PDF document. Users who are not logged in are prompted to sign up or log in.
 * **Real-time Portfolio Preview:** The generated HTML is sent back to the client and displayed in a preview section, allowing users to see the initial output of their portfolio.
-* **Light and Dark Theme Toggle:** A switch in the header enables users to toggle between a light and a dark theme for the application interface, enhancing usability and accessibility.
 * **Persistent State:** The generated portfolio data is stored in the Redux state and persisted using `redux-persist` and `localStorage`.
-* **Attractive User Interface:** The application utilizes Material-UI components to provide a clean, modern, and responsive user interface with consistent styling and accessibility features.
+* **Attractive User Interface:** The application utilizes Material-UI components to provide a clean, modern, and responsive user interface with consistent styling, theme switching and accessibility features.
 
 ## Technologies Used
 
